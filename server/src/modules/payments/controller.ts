@@ -1,20 +1,26 @@
 import prisma from "../../utils/db.js";
 import type { Request, Response } from "express";
-import { createPayment, isPaid } from "./service.js";
+import { createPayment, isPaid, qrToImage } from "./service.js";
 import { processTopUp } from ".././topups/service.js";
+
 
 export const generateKHQR = async (req: Request, res: Response) => {
     try {
         const { orderId } = req.body;
 
-        if (typeof orderId !== "string" || orderId.trim() === "") {
+        if (
+            typeof orderId !== "string" ||
+            orderId.trim() === ""
+        ) {
             return res.status(400).json({
                 message: "Order ID is required",
             });
         }
 
         const order = await prisma.order.findUnique({
-            where: { id: orderId },
+            where: {
+                id: orderId,
+            },
         });
 
         if (!order) {
@@ -29,6 +35,36 @@ export const generateKHQR = async (req: Request, res: Response) => {
             });
         }
 
+        const existingPayment = await prisma.payment.findUnique({
+            where: {
+                orderId,
+            },
+        });
+
+        if (existingPayment) {
+            if (existingPayment.status === "COMPLETED") {
+                return res.status(400).json({
+                    message: "Order has already been paid",
+                });
+            }
+
+            if (
+                existingPayment.status === "PENDING" &&
+                existingPayment.providerPaymentId &&
+                existingPayment.qrData
+            ) {
+                const qrImage = await qrToImage(
+                    existingPayment.qrData
+                );
+
+                return res.status(200).json({
+                    message: "Existing KHQR returned",
+                    md5: existingPayment.providerPaymentId,
+                    qrImage,
+                });
+            }
+        }
+
         const amount = Number(order.total);
 
         const { qr, md5, qrImage } = await createPayment(
@@ -36,7 +72,10 @@ export const generateKHQR = async (req: Request, res: Response) => {
             order.orderNumber
         );
 
-        if (typeof md5 !== "string" || md5.trim() === "") {
+        if (
+            typeof md5 !== "string" ||
+            md5.trim() === ""
+        ) {
             return res.status(400).json({
                 message: "Payment reference is required",
             });
@@ -59,7 +98,8 @@ export const generateKHQR = async (req: Request, res: Response) => {
             qrImage,
         });
     } catch (error) {
-        console.error("Unhandled error:", error);
+        console.error("Generate KHQR error:", error);
+
         return res.status(500).json({
             message: "Internal server error",
         });

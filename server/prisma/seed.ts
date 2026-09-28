@@ -15,6 +15,7 @@ async function main() {
         data: {
             name: "PUBG MOBILE",
             slug: "pubg-mobile",
+            imageUrl: "/images/games/pubg-mobile.webp",
             isActive: true,
         },
     });
@@ -23,6 +24,7 @@ async function main() {
         data: {
             name: "Mobile Legends",
             slug: "mobile-legends",
+            imageUrl: "/images/games/mobile-legends.webp",
             isActive: true,
         },
     });
@@ -31,75 +33,75 @@ async function main() {
         data: [
             {
                 gameId: pubg.id,
-                supplierPackageId: "DEV-PUBG-60-UC",
                 name: "60 UC",
                 amount: 60,
                 price: 0.99,
+                imageUrl: "/images/products/pubg-60-uc.webp",
                 isActive: true,
             },
             {
                 gameId: pubg.id,
-                supplierPackageId: "DEV-PUBG-325-UC",
                 name: "325 UC",
                 amount: 325,
                 price: 4.99,
+                imageUrl: "/images/products/pubg-325-uc.webp",
                 isActive: true,
             },
             {
                 gameId: pubg.id,
-                supplierPackageId: "DEV-PUBG-660-UC",
                 name: "660 UC",
                 amount: 660,
                 price: 9.99,
+                imageUrl: "/images/products/pubg-660-uc.webp",
                 isActive: true,
             },
             {
                 gameId: pubg.id,
-                supplierPackageId: "DEV-PUBG-1800-UC",
                 name: "1800 UC",
                 amount: 1800,
                 price: 24.99,
+                imageUrl: "/images/products/pubg-1800-uc.webp",
                 isActive: true,
             },
 
             {
                 gameId: mlbb.id,
-                supplierPackageId: "DEV-MLBB-86-DM",
                 name: "86 Diamonds",
                 amount: 86,
                 price: 0.99,
+                imageUrl: "/images/products/mlbb-86-diamonds.webp",
                 isActive: true,
             },
             {
                 gameId: mlbb.id,
-                supplierPackageId: "DEV-MLBB-172-DM",
                 name: "172 Diamonds",
                 amount: 172,
                 price: 1.99,
+                imageUrl: "/images/products/mlbb-172-diamonds.webp",
                 isActive: true,
             },
             {
                 gameId: mlbb.id,
-                supplierPackageId: "DEV-MLBB-257-DM",
                 name: "257 Diamonds",
                 amount: 257,
                 price: 2.99,
+                imageUrl: "/images/products/mlbb-257-diamonds.webp",
                 isActive: true,
             },
             {
                 gameId: mlbb.id,
-                supplierPackageId: "DEV-MLBB-344-DM",
                 name: "344 Diamonds",
                 amount: 344,
                 price: 3.99,
+                imageUrl: "/images/products/mlbb-344-diamonds.webp",
                 isActive: true,
             },
             {
                 gameId: mlbb.id,
-                supplierPackageId: "DEV-MLBB-429-DM",
                 name: "429 Diamonds",
                 amount: 429,
                 price: 4.99,
+                imageUrl: "/images/products/mlbb-429-diamonds.webp",
                 isActive: true,
             },
         ],
@@ -116,4 +118,3 @@ main()
     .finally(async () => {
         await prisma.$disconnect();
     });
-    

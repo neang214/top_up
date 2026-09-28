@@ -56,6 +56,7 @@ model Game {
   id       String  @id @default(uuid()) @db.Uuid
   name     String
   slug     String  @unique
+  imageUrl String? @map("image_url")
   isActive Boolean @default(true) @map("is_active")
 
   products Product[]
@@ -66,10 +67,10 @@ model Game {
 model Product {
   id                String  @id @default(uuid()) @db.Uuid
   gameId            String  @map("game_id") @db.Uuid
-  supplierPackageId String  @map("supplier_package_id")
   name              String
   amount            Int
   price             Decimal @db.Decimal(10, 2)
+  imageUrl          String? @map("image_url")
   isActive          Boolean @default(true) @map("is_active")
 
   game  Game        @relation(fields: [gameId], references: [id], onDelete: Restrict)

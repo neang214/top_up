@@ -4,13 +4,13 @@ export type SupplierOrderStatus =
     | "FAILED";
 
 export const createSupplierOrder = async (
-    supplierPackageId: string,
+    productId: string,
     playerId: string,
     zoneId: string | undefined,
     idempotencyKey: string
 ) => {
     console.log("Simulating supplier order:", {
-        supplierPackageId,
+        productId,
         playerId,
         zoneId,
         idempotencyKey,

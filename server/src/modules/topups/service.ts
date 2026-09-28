@@ -32,10 +32,10 @@ export const processTopUp = async (orderId: string) => {
     }
 
     const supplierResult = await createSupplierOrder(
-        item.product.supplierPackageId,
+        item.product.id,
         topUp.playerId,
         topUp.zoneId ?? undefined,
-        orderId,
+        orderId
     );
 
     if (supplierResult.status === "COMPLETED") {

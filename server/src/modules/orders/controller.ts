@@ -4,7 +4,9 @@ import type { Request, Response } from "express";
 import prisma from "../../utils/db.js";
 import { verifyToken } from "../../utils/jwt.js";
 
-const getOptionalUserId = (req: Request): string | null => {
+const getOptionalUserId = async (
+    req: Request
+): Promise<string | null> => {
     const token = req.cookies?.token;
 
     if (!token) {
@@ -12,7 +14,18 @@ const getOptionalUserId = (req: Request): string | null => {
     }
 
     try {
-        return verifyToken(token).userId;
+        const { userId } = verifyToken(token);
+
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId,
+            },
+            select: {
+                id: true,
+            },
+        });
+
+        return user?.id ?? null;
     } catch {
         return null;
     }
@@ -22,7 +35,7 @@ export const createOrder = async (req: Request, res: Response) => {
     try {
         const { productId, playerId, zoneId } = req.body;
 
-        const userId = getOptionalUserId(req);
+        const userId = await getOptionalUserId(req);
 
         if (
             typeof productId !== "string" ||

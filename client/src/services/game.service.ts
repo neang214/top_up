@@ -5,6 +5,7 @@ export interface Game {
     id: string;
     name: string;
     slug: string;
+    imageUrl: string | null;
     isActive: boolean;
 }
 

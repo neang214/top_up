@@ -51,7 +51,6 @@ export const getProducts = async (req: Request, res: Response) => {
         });
 
         return res.status(200).json(products);
-
     } catch (error) {
         console.error("Get products error:", error);
 
@@ -64,7 +63,7 @@ export const getProducts = async (req: Request, res: Response) => {
 export const createProduct = async (req: Request, res: Response) => {
     try {
         const userId = req.user?.userId;
-        const { name, amount, price, supplierPackageId } = req.body;
+        const { name, amount, price, imageUrl } = req.body;
         const { gameId } = req.params;
 
         if (typeof gameId !== "string" || gameId.trim() === "") {
@@ -76,18 +75,21 @@ export const createProduct = async (req: Request, res: Response) => {
         if (
             typeof name !== "string" ||
             typeof amount !== "number" ||
-            typeof price !== "number" ||
-            typeof supplierPackageId !== "string"
+            typeof price !== "number"
         ) {
             return res.status(400).json({
-                message:
-                    "Name, amount, price, and supplier package ID are required",
+                message: "Name, amount, and price are required",
             });
         }
 
-        if (name.trim() === "" || supplierPackageId.trim() === "") {
+        if (
+            name.trim() === "" ||
+            (imageUrl !== undefined &&
+                imageUrl !== null &&
+                typeof imageUrl !== "string")
+        ) {
             return res.status(400).json({
-                message: "Name and supplier package ID cannot be empty",
+                message: "Name and image URL must be a string",
             });
         }
 
@@ -100,10 +102,10 @@ export const createProduct = async (req: Request, res: Response) => {
         const product = await prisma.product.create({
             data: {
                 gameId,
-                supplierPackageId,
                 name: name.trim(),
                 price,
                 amount,
+                imageUrl
             },
         });
 
@@ -111,7 +113,6 @@ export const createProduct = async (req: Request, res: Response) => {
             message: "Product created successfully",
             product,
         });
-        
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === "P2003") {
@@ -131,7 +132,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
     try {
-        const { name, amount, price } = req.body;
+        const { name, amount, price, imageUrl } = req.body;
         const { productId } = req.params;
 
         if (typeof productId !== "string") {
@@ -153,9 +154,10 @@ export const updateProduct = async (req: Request, res: Response) => {
         const product = await prisma.product.update({
             where: { id: productId },
             data: {
-                name,
+                name: name.trim(),
                 amount,
                 price,
+                imageUrl
             },
         });
 

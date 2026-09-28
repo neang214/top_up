@@ -8,6 +8,7 @@ export interface Product {
     name: string;
     amount: number;
     price: number;
+    imageUrl: string | null;
     isActive: boolean;
 }
 
