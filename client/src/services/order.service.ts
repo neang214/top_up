@@ -83,7 +83,7 @@ export const useOrderService = create<OrderState>((set) => ({
     createOrder: async (payload: CreateOrderPayload) => {
         set({ isLoading: true });
         try {
-            const res = await api.post<{ message: string; order: Order }>("/api/orders", payload);
+            const res = await api.post<{ message: string; order: Order }>("/orders", payload);
             const createdOrder = res.data.order;
 
             set((state) => ({
@@ -102,7 +102,7 @@ export const useOrderService = create<OrderState>((set) => ({
     getOrder: async (id: string) => {
         set({ isLoading: true });
         try {
-            const res = await api.get<Order>(`/api/orders/${id}`);
+            const res = await api.get<Order>(`/orders/${id}`);
             set({ currentOrder: res.data, isLoading: false });
         } catch (error) {
             set({ currentOrder: null, isLoading: false });
@@ -112,7 +112,7 @@ export const useOrderService = create<OrderState>((set) => ({
     getMyOrders: async () => {
         set({ isLoading: true });
         try {
-            const res = await api.get<Order[]>("/api/orders/my");
+            const res = await api.get<Order[]>("/orders/my");
             set({ orders: res.data, isLoading: false });
         } catch (error) {
             set({ orders: null, isLoading: false });
@@ -122,7 +122,7 @@ export const useOrderService = create<OrderState>((set) => ({
     getOrders: async () => {
         set({ isLoading: true });
         try {
-            const res = await api.get<Order[]>("/api/orders");
+            const res = await api.get<Order[]>("/orders");
             set({ orders: res.data, isLoading: false });
         } catch (error) {
             set({ orders: null, isLoading: false });

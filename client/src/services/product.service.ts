@@ -31,7 +31,7 @@ export const useProductService = create<ProductState>((set) => ({
     getProductsByGame: async (gameId: string) => {
         set({ isLoading: true });
         try {
-            const res = await api.get<Product[]>(`/api/games/${gameId}/products`);
+            const res = await api.get<Product[]>(`/games/${gameId}/products`);
             set({ products: res.data, isLoading: false });
         } catch (error) {
             set({ products: null, isLoading: false });
@@ -42,7 +42,7 @@ export const useProductService = create<ProductState>((set) => ({
         set({ isLoading: true });
         try {
             const res = await api.post<{ message: string; product: Product }>(
-                `/api/games/${data.gameId}/products`,
+                `/games/${data.gameId}/products`,
                 data
             );
             const newProduct = res.data.product;
@@ -60,7 +60,7 @@ export const useProductService = create<ProductState>((set) => ({
         set({ isLoading: true });
         try {
             const res = await api.put<{ message: string; product: Product }>(
-                `/api/products/${data.id}`,
+                `/products/${data.id}`,
                 {
                     name: data.name,
                     amount: data.amount,
@@ -82,7 +82,7 @@ export const useProductService = create<ProductState>((set) => ({
         set({ isLoading: true });
         try {
             const res = await api.patch<{ message: string; product: Product }>(
-                `/api/products/${data.id}/status`,
+                `/products/${data.id}/status`,
                 {
                     isActive: data.isActive,
                 }

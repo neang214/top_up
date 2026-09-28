@@ -35,7 +35,7 @@ export const useAuthService = create<AuthState>((set) => ({
   checkAuth: async () => {
     set({ isLoading: true });
     try {
-      const res = await api.get('/api/auth/me');
+      const res = await api.get('/auth/me');
       const userData = res.data ?? res; 
 
       set({ userInfo: userData, isLoading: false });
@@ -47,7 +47,7 @@ export const useAuthService = create<AuthState>((set) => ({
   login: async (data: LoginPayload) => {
     set({ isLoading: true });
     try {
-      const res = await api.post('/api/auth/login', data);
+      const res = await api.post('/auth/login', data);
       const userData = res.data ?? res;
 
       set({ userInfo: userData, isLoading: false });
@@ -60,7 +60,7 @@ export const useAuthService = create<AuthState>((set) => ({
   register: async (data: RegisterPayload) => {
     set({ isLoading: true });
     try {
-      const res = await api.post('/api/auth/signup', data);
+      const res = await api.post('/auth/signup', data);
       const userData = res.data ?? res;
 
       set({ userInfo: userData, isLoading: false });
@@ -73,7 +73,7 @@ export const useAuthService = create<AuthState>((set) => ({
   logOut: async () => {
     set({ isLoading: true });
     try {
-      await api.post('/api/auth/logout');
+      await api.post('/auth/logout');
     } catch (error) {
       console.error('Logout error:', error);
     } finally {

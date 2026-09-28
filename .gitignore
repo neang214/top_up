@@ -7,7 +7,6 @@ node_modules/
 
 # Prisma generated client
 server/src/generated/prisma/
-server/prisma/seed.ts
 
 # Build output
 server/dist/

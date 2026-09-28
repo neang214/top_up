@@ -30,7 +30,7 @@ export const useGameService = create<GameState>((set) => ({
     getGames: async () => {
         set({ isLoading: true });
         try {
-            const res = await api.get('/api/games');
+            const res = await api.get('/games');
             const gameData = res.data ?? res;
 
             set({ games: gameData, isLoading: false });
@@ -42,7 +42,7 @@ export const useGameService = create<GameState>((set) => ({
     createGame: async (data: CreateGamePayload) => {
         set({ isLoading: true });
         try {
-            const res = await api.post('/api/games', data);
+            const res = await api.post('/games', data);
             const newGame: Game = res.data ?? res;
 
             set((state) => ({
@@ -57,7 +57,7 @@ export const useGameService = create<GameState>((set) => ({
     updateGame: async (data: UpdateGamePayload) => {
         set({ isLoading: true });
         try {
-            const res = await api.put(`/api/games/${data.id}`, data);
+            const res = await api.put(`/games/${data.id}`, data);
             const updatedGame: Game = res.data ?? res;
 
             set((state) => ({
@@ -72,7 +72,7 @@ export const useGameService = create<GameState>((set) => ({
     toggleGame: async (data: StatusPayload) => {
         set({ isLoading: true });
         try {
-            const res = await api.patch(`/api/games/${data.id}/status`, { isActive: data.isActive });
+            const res = await api.patch(`/games/${data.id}/status`, { isActive: data.isActive });
             const updatedGame: Game = res.data ?? res;
 
             set((state) => ({

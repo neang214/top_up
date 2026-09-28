@@ -46,7 +46,7 @@ export const usePaymentService = create<PaymentState>((set) => ({
     generateKHQR: async (orderId: string) => {
         set({ isLoading: true });
         try {
-            const res = await api.post<KHQRResponse>("/api/payments", { orderId });
+            const res = await api.post<KHQRResponse>("/payments", { orderId });
             const data = res.data;
 
             set({
@@ -65,7 +65,7 @@ export const usePaymentService = create<PaymentState>((set) => ({
 
     verifyPayment: async (orderId: string, md5: string) => {
         try {
-            const res = await api.post<VerifyPaymentResponse>("/api/payments/verify", {
+            const res = await api.post<VerifyPaymentResponse>("/payments/verify", {
                 orderId,
                 md5,
             });
