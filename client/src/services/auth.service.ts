@@ -60,7 +60,7 @@ export const useAuthService = create<AuthState>((set) => ({
   register: async (data: RegisterPayload) => {
     set({ isLoading: true });
     try {
-      const res = await api.post('/auth/signup', data);
+      const res = await api.post('/auth/register', data);
       const userData = res.data ?? res;
 
       set({ userInfo: userData, isLoading: false });

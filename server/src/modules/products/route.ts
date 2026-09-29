@@ -5,8 +5,9 @@ import { uploadImage } from "../../middleware/upload.js";
 const router = express.Router();
 
 router.get("/games/:gameId/products", controller.getProducts);
+
 router.post(
-    "/:gameId",
+    "/games/:gameId/products",
     authenticate,
     authorize("ADMIN"),
     uploadImage.single("image"),

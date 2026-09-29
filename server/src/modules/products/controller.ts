@@ -44,6 +44,7 @@ export const getProducts = async (req: Request, res: Response) => {
                 name: true,
                 amount: true,
                 price: true,
+                imageUrl: true,
             },
             orderBy: {
                 amount: "asc",
