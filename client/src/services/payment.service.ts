@@ -3,6 +3,7 @@ import { api } from "./api";
 
 export const PaymentProvider = {
     BAKONG: "BAKONG",
+    PAYWAY: "PAYWAY",
 } as const;
 
 export type PaymentProvider = (typeof PaymentProvider)[keyof typeof PaymentProvider];
@@ -18,6 +19,8 @@ export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus];
 
 export interface KHQRResponse {
     message: string;
+    /** Which provider created this payment. Older servers do not send it, which means Bakong. */
+    provider?: PaymentProvider;
     md5: string;
     qrImage: string;
 }
