@@ -36,6 +36,11 @@ export default function Navbar() {
                             My orders
                         </NavLink>
                     )}
+                    {user?.role === "ADMIN" && (
+                        <NavLink to="/admin" className={link}>
+                            Admin
+                        </NavLink>
+                    )}
                 </nav>
 
                 <div className="ml-auto flex items-center gap-2">

@@ -10,4 +10,17 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
+  server: {
+    host: true,
+    allowedHosts: [
+      "bulgur-kindred-groove.ngrok-free.dev",
+    ],
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  }
 })
