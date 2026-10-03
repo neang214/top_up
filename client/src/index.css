@@ -1,1 +1,140 @@
 @import "tailwindcss";
+@import "@fontsource-variable/unbounded";
+@import "@fontsource-variable/figtree";
+
+/* ==========================================================================
+   COLOR TEMPLATE
+   Every color in the app comes from the tokens below. To restyle the site,
+   change the values here — nothing else in the code holds a hex color.
+
+   Two themes:
+     :root / [data-theme="light"]  -> "white" theme
+     [data-theme="dark"]           -> "dark" theme
+
+   canvas       page background
+   surface      cards, header, inputs
+   raised       hover states, selected fills, skeletons
+   line         borders and dividers
+   ink          main text
+   dim          secondary text
+   accent       gold — buttons, selected pack, focus ring
+   on-accent    text that sits on top of the accent
+   accent-text  gold used as text/links (darker in the white theme for contrast)
+   success / danger  status colors
+   khqr         Bakong KHQR red — used only on the payment ticket
+   ========================================================================== */
+
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --canvas: #f7f7fb;
+  --surface: #ffffff;
+  --raised: #eeeef8;
+  --line: #dcdcee;
+
+  --ink: #15132e;
+  --dim: #5e5b85;
+
+  --accent: #ffb524;
+  --accent-hover: #ffc44d;
+  --on-accent: #221600;
+  --accent-text: #8a5300;
+
+  --success: #0b8a5b;
+  --danger: #c9263a;
+  --khqr: #e1232e;
+
+  --grid-dot: rgb(21 19 46 / 0.10);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: #0c0b1a;
+  --surface: #141230;
+  --raised: #1d1a42;
+  --line: #2d2a5e;
+
+  --ink: #f3f1ff;
+  --dim: #a29fcc;
+
+  --accent: #ffb524;
+  --accent-hover: #ffcb5c;
+  --on-accent: #221600;
+  --accent-text: #ffcb5c;
+
+  --success: #3ddc97;
+  --danger: #ff6b7a;
+  --khqr: #e1232e;
+
+  --grid-dot: rgb(243 241 255 / 0.09);
+}
+
+/* Map the tokens to Tailwind utilities: bg-canvas, text-ink, border-line ... */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-dim: var(--dim);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+  --color-accent-text: var(--accent-text);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-khqr: var(--khqr);
+
+  --font-display: "Unbounded Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Figtree Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    background: var(--canvas);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Dotted grid used behind the home hero */
+.bg-dots {
+  background-image: radial-gradient(var(--grid-dot) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, #000 40%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
