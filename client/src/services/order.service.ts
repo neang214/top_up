@@ -21,6 +21,15 @@ export const PaymentStatus = {
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus];
 
+export const TopUpStatus = {
+    PENDING: "PENDING",
+    PROCESSING: "PROCESSING",
+    COMPLETED: "COMPLETED",
+    FAILED: "FAILED",
+} as const;
+
+export type TopUpStatus = (typeof TopUpStatus)[keyof typeof TopUpStatus];
+
 export interface OrderItem {
     id: string;
     orderId: string;
@@ -36,7 +45,7 @@ export interface TopUp {
     orderId: string;
     playerId: string;
     zoneId: string | null;
-    status: OrderStatus;
+    status: TopUpStatus;
 }
 
 export interface PaymentSummary {
@@ -56,7 +65,7 @@ export interface Order {
     completedAt: string | null;
     items: OrderItem[];
     topUp: TopUp | null;
-    payment?: PaymentSummary[];
+    payment?: PaymentSummary | null;
 }
 
 export interface CreateOrderPayload {

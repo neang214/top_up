@@ -48,7 +48,7 @@ export const useAuthService = create<AuthState>((set) => ({
     set({ isLoading: true });
     try {
       const res = await api.post('/auth/login', data);
-      const userData = res.data ?? res;
+      const userData = res.data.user;
 
       set({ userInfo: userData, isLoading: false });
     } catch (error) {
@@ -61,7 +61,7 @@ export const useAuthService = create<AuthState>((set) => ({
     set({ isLoading: true });
     try {
       const res = await api.post('/auth/register', data);
-      const userData = res.data ?? res;
+      const userData = res.data.user;
 
       set({ userInfo: userData, isLoading: false });
     } catch (error) {

@@ -44,7 +44,7 @@ export const useGameService = create<GameState>((set) => ({
         set({ isLoading: true });
         try {
             const res = await api.post('/games', data);
-            const newGame: Game = res.data ?? res;
+            const newGame: Game = res.data.game;
 
             set((state) => ({
                 games: state.games ? [...state.games, newGame] : [newGame],
@@ -59,7 +59,7 @@ export const useGameService = create<GameState>((set) => ({
         set({ isLoading: true });
         try {
             const res = await api.put(`/games/${data.id}`, data);
-            const updatedGame: Game = res.data ?? res;
+            const updatedGame: Game = res.data.game;
 
             set((state) => ({
                 games: state.games?.map((g) => (g.id === updatedGame.id ? updatedGame : g)) ?? null,
@@ -74,7 +74,7 @@ export const useGameService = create<GameState>((set) => ({
         set({ isLoading: true });
         try {
             const res = await api.patch(`/games/${data.id}/status`, { isActive: data.isActive });
-            const updatedGame: Game = res.data ?? res;
+            const updatedGame: Game = res.data.game;
 
             set((state) => ({
                 games: state.games?.map((g) => (g.id === updatedGame.id ? updatedGame : g)) ?? null,
